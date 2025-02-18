@@ -1,0 +1,13 @@
+<div class="manuals-container">
+    <h2>📖 Manuais do Sistema</h2>
+  
+    <!-- Lista de Manuais -->
+    <div *ngFor="let manual of manuais" class="manual-card">
+      <h3>{{ manual.titulo }}</h3>
+      <p>{{ manual.descricao }}</p>
+      <button (click)="downloadPDF(manual.id)">📥 Exportar PDF</button>
+    </div>
+  
+    <button class="export-all" (click)="downloadTodosPDFs()">📥 Exportar Todos em PDF</button>
+  </div>
+  

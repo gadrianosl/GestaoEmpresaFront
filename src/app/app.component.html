@@ -1,0 +1,34 @@
+<header class="app-header">
+  <nav class="navbar">
+    <div class="logo">
+      <span class="logo-icon">GC</span> <!-- Inicial do nome do sistema -->
+      <span class="system-name">Gestão Comercial</span> <!-- Nome do sistema -->
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/" routerLinkActive="active" title="Início"><i class="fas fa-home"></i></a></li>
+      <li><a routerLink="/clientes" routerLinkActive="active" title="Clientes"><i class="fas fa-users"></i></a></li>
+      <li><a routerLink="/fornecedores" routerLinkActive="active" title="Fornecedores"><i class="fas fa-industry"></i></a></li>
+      <li><a routerLink="/produtos" routerLinkActive="active" title="Produtos"><i class="fas fa-box-open"></i></a></li>
+      <li><a routerLink="/vendas" routerLinkActive="active" title="Vendas"><i class="fas fa-cash-register"></i></a></li>
+      <li><a routerLink="/compras"><i class="fas fa-shopping-bag"></i></a></li>
+      <li><a routerLink="/relatorios"><i class="fas fa-chart-line"></i></a></li>
+       <!-- Menu Ajuda com Submenu -->
+       <li class="menu-ajuda">
+        <a class="nav-icon" title="Ajuda"><i class="fas fa-question-circle"></i></a>
+        <ul class="submenu">
+          <li><a routerLink="/ajuda/manuais"><i class="fas fa-book"></i> Manuais</a></li>
+        </ul>
+      </li>
+      
+      
+    </ul>
+  </nav>
+</header>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="app-footer">
+  <p>&copy; 2025 - Gestão Comercial</p>
+</footer>
