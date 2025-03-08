@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface Cliente {
   id?: number;
   nome: string;
   email: string;
-  cpfOuCnpj: string;
+  cpf: string;
   telefone: string;
+  endereco: string;
 }
 
 @Injectable({
@@ -23,14 +25,22 @@ export class ClienteService {
   }
 
   criarCliente(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.apiUrl, cliente);
+    return this.http.post<Cliente>(this.apiUrl, cliente).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  atualizarCliente(id: number, cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${this.apiUrl}/${id}`, cliente);
+  // Método para atualizar um cliente existente
+  atualizarCliente(cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.apiUrl}/${cliente.id}`, cliente);
   }
 
   excluirCliente(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('Erro na API:', error);
+    return throwError(() => new Error('Ocorreu um erro ao chamar a API.'));
   }
 }

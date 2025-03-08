@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteService, Cliente } from '../services/cliente.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   standalone: true // Isso é necessário para standalone components
 })
 export class ClientesComponent implements OnInit {
+  faEdit = faEdit;
+  faTrash = faTrash;
   clientes: Cliente[] = [];
-  cliente: Cliente = { nome: '', email: '', cpfOuCnpj: '', telefone: '' };
+  cliente: Cliente = { nome: '', email: '', cpf: '', telefone: '', endereco: '' };
   editando = false;
   clienteId?: number;
 
@@ -28,16 +33,39 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  salvarCliente() {
+  salvarCliente(): void {
+    if (!this.cliente.nome || !this.cliente.email || !this.cliente.cpf || !this.cliente.telefone || !this.cliente.endereco) {
+      alert('Todos os campos são obrigatórios!');
+      return;
+    }
+
+    // Se estamos editando, chamamos o método de atualização, senão, criamos um novo cliente
     if (this.editando) {
-      this.clienteService.atualizarCliente(this.clienteId!, this.cliente).subscribe(() => {
-        this.listarClientes();
-        this.resetarFormulario();
+      this.clienteService.atualizarCliente(this.cliente).subscribe({
+        next: (clienteAtualizado) => {
+          // Atualiza a lista de clientes com o cliente editado
+          const index = this.clientes.findIndex(c => c.id === clienteAtualizado.id);
+          if (index !== -1) {
+            this.clientes[index] = clienteAtualizado;
+          }
+          this.resetarFormulario(); // Resetar formulário após salvar
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar cliente:', err);
+          alert('Erro ao atualizar cliente. Verifique o console.');
+        }
       });
     } else {
-      this.clienteService.criarCliente(this.cliente).subscribe(() => {
-        this.listarClientes();
-        this.resetarFormulario();
+      // Caso não estejamos editando, criamos um novo cliente
+      this.clienteService.criarCliente(this.cliente).subscribe({
+        next: (novoCliente) => {
+          this.clientes.push(novoCliente);
+          this.resetarFormulario(); // Resetar formulário após salvar
+        },
+        error: (err) => {
+          console.error('Erro ao salvar cliente:', err);
+          alert('Erro ao salvar cliente. Verifique o console.');
+        }
       });
     }
   }
@@ -57,7 +85,7 @@ export class ClientesComponent implements OnInit {
   }
 
   resetarFormulario() {
-    this.cliente = { nome: '', email: '', cpfOuCnpj: '', telefone: '' };
+    this.cliente = { nome: '', email: '', cpf: '', telefone: '', endereco: '' };
     this.editando = false;
   }
 }

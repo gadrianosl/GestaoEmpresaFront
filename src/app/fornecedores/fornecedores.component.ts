@@ -1,66 +1,92 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FornecedorService, Fornecedor } from '../services/fornecedores.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-fornecedores',
   templateUrl: './fornecedores.component.html',
   styleUrls: ['./fornecedores.component.css'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   standalone: true // Isso é necessário para standalone components
 })
-export class FornecedoresComponent {
-  // Lista de fornecedores de exemplo
-  fornecedores = [
-    { nome: 'Fornecedor 1', cnpj: '12.345.678/0001-90', endereco: 'Rua 1, 100', telefone: '(11) 1234-5678', email: 'fornecedor1@email.com' },
-    { nome: 'Fornecedor 2', cnpj: '98.765.432/0001-09', endereco: 'Avenida 2, 200', telefone: '(11) 9876-5432', email: 'fornecedor2@email.com' },
-    { nome: 'Fornecedor 3', cnpj: '11.223.344/0001-56', endereco: 'Rua 3, 300', telefone: '(21) 4567-1234', email: 'fornecedor3@email.com' }
-  ];
+export class FornecedoresComponent implements OnInit {
+  faEdit = faEdit;
+  faTrash = faTrash;
+  fornecedores: Fornecedor[] = [];
+  fornecedor: Fornecedor = { nome: '', cnpj: '', endereco: '', telefone: '', email: '' };
+  editando = false;
+  fornecedorId?: number;
 
-  // Objeto para armazenar os dados do fornecedor que será inserido ou editado
-  fornecedorEditado = {
-    nome: '',
-    cnpj: '',
-    endereco: '',
-    telefone: '',
-    email: ''
-  };
+  constructor(private fornecedorService: FornecedorService) {}
 
-  // Método para adicionar ou editar fornecedor
-  addFornecedor(form: any) {
-    if (this.fornecedorEditado.cnpj) {
-      // Se já tiver CNPJ, é um fornecedor que estamos editando
-      this.editFornecedor(form);
+  ngOnInit() {
+    console.log('FornecedoresComponent inicializado');
+    this.listarFornecedores();
+  }
+
+  listarFornecedores() {
+    this.fornecedorService.listarFornecedores().subscribe(data => {
+      this.fornecedores = data;
+    });
+  }
+
+  salvarFornecedor(): void {
+    if (!this.fornecedor.nome || !this.fornecedor.cnpj || !this.fornecedor.endereco || !this.fornecedor.telefone || !this.fornecedor.email) {
+      alert('Todos os campos são obrigatórios!');
+      return;
+    }
+
+    if (this.editando && this.fornecedorId) {
+      // Se está editando, atualiza o fornecedor
+      this.fornecedor.id = this.fornecedorId;
+      this.fornecedorService.atualizarFornecedor(this.fornecedor).subscribe({
+        next: (fornecedorAtualizado: Fornecedor) => {
+          const index = this.fornecedores.findIndex(f => f.id === fornecedorAtualizado.id);
+          if (index !== -1) {
+            this.fornecedores[index] = fornecedorAtualizado;
+          }
+          this.resetarFormulario(); // Resetar o formulário após a atualização
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar fornecedor:', err);
+          alert('Erro ao atualizar fornecedor. Verifique o console.');
+        }
+      });
     } else {
-      // Se não tiver CNPJ, é um novo fornecedor
-      this.fornecedores.push(form);
-    }
-
-    // Limpa o formulário após adicionar
-    this.fornecedorEditado = {
-      nome: '',
-      cnpj: '',
-      endereco: '',
-      telefone: '',
-      email: ''
-    };
-  }
-
-  // Método para editar fornecedor
-  editFornecedor(form: any) {
-    const index = this.fornecedores.findIndex(fornecedor => fornecedor.cnpj === this.fornecedorEditado.cnpj);
-    if (index !== -1) {
-      this.fornecedores[index] = form;
+      console.log(this.fornecedor)
+      // Caso contrário, cria um novo fornecedor
+      this.fornecedorService.criarFornecedor(this.fornecedor).subscribe({
+        next: (novoFornecedor: Fornecedor) => {
+          this.fornecedores.push(novoFornecedor);
+          this.resetarFormulario(); // Resetar o formulário após salvar
+        },
+        error: (err) => {
+          console.error('Erro ao salvar fornecedor:', err);
+          alert('Erro ao salvar fornecedor. Verifique o console.');
+        }
+      });
     }
   }
 
-  // Método para selecionar um fornecedor para edição
-  selectFornecedor(fornecedor: any) {
-    this.fornecedorEditado = { ...fornecedor };  // Copia os dados para o formulário de edição
+  editarFornecedor(fornecedor: Fornecedor) {
+    this.fornecedor = { ...fornecedor };
+    this.fornecedorId = fornecedor.id;
+    this.editando = true;
   }
 
-  // Método para excluir um fornecedor
-  removerFornecedor(index: number) {
-    this.fornecedores.splice(index, 1);
+  excluirFornecedor(id?: number) {
+    if (id) {
+      this.fornecedorService.excluirFornecedor(id).subscribe(() => {
+        this.listarFornecedores();
+      });
+    }
+  }
+
+  resetarFormulario() {
+    this.fornecedor = { nome: '', cnpj: '', endereco: '', telefone: '', email: '' };
+    this.editando = false;
   }
 }

@@ -110,3 +110,29 @@
     }
   }
   
+  /* Ajuste da coluna Ações */
+th.acao, td.acao {
+  width: 80px; /* Reduzindo o espaço da coluna */
+  text-align: center;
+}
+
+/* Ajuste dos botões de ação */
+td.acao button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+td.acao button:hover {
+  transform: scale(1.1); /* Efeito de leve aumento ao passar o mouse */
+}
+
+td.acao fa-icon {
+  font-size: 18px;
+  color: #1E3A8A; /* Azul escuro */
+}
+/* Espaçamento entre o formulário e a lista de clientes */
+form {
+  margin-bottom: 10px; /* Adiciona um espaçamento maior abaixo do formulário */
+}

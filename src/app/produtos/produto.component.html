@@ -1,0 +1,75 @@
+<div class="container">
+  <h2>Cadastro de Produto</h2>
+  <form (ngSubmit)="salvarProduto()" #produtoForm="ngForm">
+    <div class="form-group">
+      <label for="codigo">Código</label>
+      <input type="text" id="codigo" [(ngModel)]="produto.codigo" name="codigo" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <input type="text" id="descricao" [(ngModel)]="produto.descricao" name="descricao" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="descricaoDetalhada">Descrição Detalhada</label>
+      <input type="text" id="descricaoDetalhada" [(ngModel)]="produto.descricaoDetalhada" name="descricaoDetalhada"/>
+    </div>
+
+    <div class="form-group">
+      <label for="unidade">Unidade</label>
+      <select id="unidade" [(ngModel)]="produto.unidade" name="unidade" required>
+        <option value="UN">Unidade</option>
+        <option value="KG">Kg</option>
+        <option value="L">Litro</option>
+        <option value="PC">Peça</option>
+        <option value="M">Metro</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="precoCusto">Preço Custo</label>
+      <input type="number" id="precoCusto" [(ngModel)]="produto.precoCusto" name="precoCusto" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="precoVenda">Preço Venda</label>
+      <input type="number" id="precoVenda" [(ngModel)]="produto.precoVenda" name="precoVenda" required/>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!produtoForm.valid">Salvar</button>
+  </form>
+
+  <h3 style="margin-top: 30px;">Lista de Produtos</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descrição</th>
+        <th>Descrição Detalhada</th>
+        <th>Unidade</th>
+        <th>Preço Custo</th>
+        <th>Preço Venda</th>
+        <th class="acao-coluna">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.codigo }}</td>
+        <td>{{ produto.descricao }}</td>
+        <td>{{ produto.descricaoDetalhada }}</td>
+        <td>{{ produto.unidade }}</td>
+        <td>{{ produto.precoCusto | currency }}</td>
+        <td>{{ produto.precoVenda | currency }}</td>
+        <td class="acao">
+          <button class="btn-edit" (click)="editarProduto(produto)" title="Editar Produto">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+          <button class="btn-delete" (click)="deletarProduto(produto.id)" title="Excluir Produto">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </td>      
+      </tr>
+    </tbody>
+  </table>
+</div>
