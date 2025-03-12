@@ -58,8 +58,8 @@ export class ProdutoComponent implements OnInit {
     this.editando = true;
   }
 
-  deletarProduto(id: number | undefined): void {
-    if (id === undefined) {
+  deletarProduto(id: number | null| undefined): void {
+    if (id === undefined || id === null) {
       console.error("Erro: Código do produto é indefinido!");
       return;
     }

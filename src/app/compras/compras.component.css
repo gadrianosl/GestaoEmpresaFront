@@ -1,59 +1,192 @@
+/* 🎨 Definindo as cores diretamente no CSS */
 .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-  }
-  
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .table th {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .btn {
-    margin-right: 5px;
-  }
-  
-  .btn-sm {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-  
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: #ffffff; /* Branco */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 80px;
+}
+
+/* 📝 Título */
+h2 {
+  color: #1E3A8A; /* Azul escuro */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 🛒 Formulário de Vendas */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 800px;
+  background: #f0f4f9;
+  padding: 20px;
+  border: 3px solid #1E3A8A; /* Borda azul escura */
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+label {
+  font-size: 16px;
+  color: #1E3A8A; /* Azul escuro */
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select {
+  padding: 12px;
+  border: 2px solid #1E3A8A;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #333333;
+  background-color: #ffffff;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+  border-color: #F97316; /* Muda para laranja ao focar */
+  outline: none;
+}
+
+/* 🚀 Botão */
+button {
+  background-color: #F97316; /* Laranja */
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #cc5500; /* Laranja mais escuro no hover */
+}
+
+/* 📑 Tabela de Vendas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #1E3A8A; /* Azul escuro */
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+td {
+  color: #333333;
+}
+
+/* 🛠️ Responsividade */
+@media (max-width: 768px) {
   form {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
+    flex-direction: column;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
+}
+
+/* Ajuste da coluna Ações */
+th.acao, td.acao {
+  width: 100px;
+  text-align: center;
+}
+
+/* Ajuste dos botões de ação */
+td.acao button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 18px;
+  color: #1E3A8A;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+td.acao button:hover {
+  transform: scale(1.1);
+  color: #F97316;
+}
+
+/* Ícones de Ação */
+td.acao fa-icon {
+  font-size: 18px;
+  color: #1E3A8A;
+}
+
+/* 🏷️ Estilo para o resumo da venda */
+.resumo-venda {
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  padding: 15px;
+  border: 2px solid #1E3A8A;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  text-align: center;
+}
+
+.resumo-venda h3 {
+  color: #1E3A8A;
+  margin-bottom: 10px;
+}
+
+.resumo-venda p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #F97316;
+}
+
+/* 📋 Lista de produtos adicionados */
+.lista-produtos {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  padding: 15px;
+  border: 2px solid #1E3A8A;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lista-produtos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-produtos li {
+  font-size: 16px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lista-produtos li:last-child {
+  border-bottom: none;
+}

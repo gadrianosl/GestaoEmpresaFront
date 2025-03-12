@@ -18,7 +18,7 @@ export class FornecedoresComponent implements OnInit {
   fornecedores: Fornecedor[] = [];
   fornecedor: Fornecedor = { nome: '', cnpj: '', endereco: '', telefone: '', email: '' };
   editando = false;
-  fornecedorId?: number;
+  fornecedorId?: number | null;
 
   constructor(private fornecedorService: FornecedorService) {}
 
@@ -77,7 +77,11 @@ export class FornecedoresComponent implements OnInit {
     this.editando = true;
   }
 
-  excluirFornecedor(id?: number) {
+  excluirFornecedor(id?: number | null |undefined) {
+    if (id === undefined || id === null) {
+      console.error("Erro: Código do produto é indefinido!");
+      return;
+    }
     if (id) {
       this.fornecedorService.excluirFornecedor(id).subscribe(() => {
         this.listarFornecedores();

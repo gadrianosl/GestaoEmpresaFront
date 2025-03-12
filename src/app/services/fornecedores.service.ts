@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 // Definindo a interface Fornecedor
 export interface Fornecedor {
-  id?: number;
+  id?: number | null;
   nome: string;
   cnpj: string;
   endereco: string;

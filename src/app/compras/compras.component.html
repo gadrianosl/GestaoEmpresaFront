@@ -29,7 +29,7 @@
             <label for="produto">Produto</label>
             <select id="produto" [(ngModel)]="produtoSelecionado" name="produto">
               <option *ngFor="let produto of produtos" [value]="produto.id">
-                {{ produto.descricao }} - {{ produto.precoCompra | currency }}
+                {{ produto.descricao }} - {{ produto.precoCusto | currency }}
               </option>
             </select>
             <button type="button" class="btn btn-secondary" (click)="adicionarProduto()">Adicionar Produto</button>
@@ -39,8 +39,8 @@
             <h3>Produtos na Compra</h3>
             <ul>
               <li *ngFor="let item of compraSelecionada?.itens;">
-                {{ item.produto.descricao }} - {{ item.quantidade }}x {{ item.precoUnitario | currency }}
-                <button class="btn-delete" (click)="removerProduto(item.id)" title="Remover Produto">
+                {{ item.produto.descricao }} - {{ item.quantidade }}x {{ item.precoUnitario| currency }}
+                <button class="btn-delete" (click)="removerProduto(item.produto.id)" title="Remover Produto">
                   <fa-icon [icon]="faTrash"></fa-icon>
                 </button>
               </li>
@@ -49,7 +49,7 @@
 
         <div class="resumo-compra">
             <h3>Resumo da Compra</h3>
-            <p>Total: {{ compraSelecionada?.total | currency }}</p>
+            <p>Total: {{ compraSelecionada.total| currency }}</p>
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="!compraForm.valid">Salvar</button>
