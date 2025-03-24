@@ -32,6 +32,12 @@
                 {{ produto.descricao }} - {{ produto.precoCusto | currency }}
               </option>
             </select>
+
+            <!-- Campo para a quantidade -->
+            <div class="form-group">
+              <label for="quantidade">Quantidade</label>
+              <input type="number" id="quantidade" [(ngModel)]="quantidade" name="quantidade" min="1" required />
+            </div>
             <button type="button" class="btn btn-secondary" (click)="adicionarProduto()">Adicionar Produto</button>
         </div>
 

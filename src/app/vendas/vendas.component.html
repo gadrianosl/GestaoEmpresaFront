@@ -32,6 +32,13 @@
             {{ produto.descricao }} - {{ produto.precoVenda | currency }}
           </option>
         </select>
+
+        <!-- Campo para a quantidade -->
+        <div class="form-group">
+          <label for="quantidade">Quantidade</label>
+          <input type="number" id="quantidade" [(ngModel)]="quantidade" name="quantidade" min="1" required />
+        </div>
+
         <button type="button" class="btn btn-secondary" (click)="adicionarProduto()">Adicionar Produto</button>
       </div>
   
@@ -40,7 +47,7 @@
         <ul>
           <li *ngFor="let item of venda.itens;">
             {{ item.produto.descricao }} - {{ item.quantidade }}x {{ item.precoUnitario | currency }}
-            <button class="btn-delete" (click)="removerProduto(item.id)" title="Remover Produto">
+            <button class="btn-delete" (click)="removerProduto(item.produto.id)" title="Remover Produto">
               <fa-icon [icon]="faTrash"></fa-icon>
             </button>
           </li>

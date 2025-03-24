@@ -19,6 +19,7 @@ export class ComprasComponent implements OnInit {
   // Ícones FontAwesome
   faEdit = faEdit;
   faTrash = faTrash;
+  quantidade: number = 1;
 
   compras: Compra[] = [];
   fornecedores: Fornecedor[] = [];
@@ -70,7 +71,6 @@ export class ComprasComponent implements OnInit {
 
   editarCompra(compra: Compra) {
     this.compraSelecionada = { ...compra };
-    console.log(this.compraSelecionada);
   }
 
   salvarCompra() {
@@ -107,11 +107,13 @@ export class ComprasComponent implements OnInit {
       this.compraSelecionada.itens.push({
         produto: produto,
         precoUnitario: produto.precoCusto,
-        quantidade: 1,
+        quantidade: this.quantidade,
       });
     }
 
     this.calcularTotal();
+    // Reseta a quantidade para o próximo item
+    this.quantidade = 1;
     this.produtoSelecionado = null;
   }
 
@@ -126,10 +128,8 @@ export class ComprasComponent implements OnInit {
     this.calcularTotal();
   }
 
-  calcularTotal(): void {
-    this.compraSelecionada.total = this.compraSelecionada.itens.reduce(
-      (acc, item) => acc + (item.precoUnitario * item.quantidade),
-      0
-    );
+  calcularTotal() {
+    this.compraSelecionada.total = this.compraSelecionada.itens
+      .reduce((sum, item) => sum + item.quantidade * item.precoUnitario, 0);
   }
 }

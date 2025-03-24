@@ -1,0 +1,71 @@
+ <!-- Primeira linha de gráficos -->
+ <div class="charts-row">
+    <div class="chart-item">
+      <p class="chart-title">Clientes Inadimplentes</p>
+      <canvas baseChart
+              [datasets]="inadimplentesData"
+              [labels]="inadimplentesLabels"
+              [options]="chartOptions"
+              chartType="bar"
+              width="300" height="200">
+      </canvas>
+    </div>
+
+    <div class="chart-item">
+      <p class="chart-title">Contas a Pagar</p>
+      <canvas baseChart
+              [datasets]="contasPagarData"
+              [labels]="contasPagarLabels"
+              [options]="chartOptions"
+              chartType="line"
+              width="300" height="200">
+      </canvas>
+    </div>
+
+    <div class="chart-item">
+      <p class="chart-title">Estoque Baixo</p>
+      <canvas baseChart
+              [datasets]="estoqueBaixoData"
+              [labels]="estoqueBaixoLabels"
+              [options]="chartOptions"
+              chartType="pie"
+              width="300" height="200">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Segunda linha de gráficos -->
+  <div class="charts-row">
+    <div class="chart-item">
+      <p class="chart-title">Contas a Receber</p>
+      <canvas baseChart
+              [datasets]="contasReceberData"
+              [labels]="contasReceberLabels"
+              [options]="chartOptions"
+              chartType="bar"
+              width="300" height="200">
+      </canvas>
+    </div>
+
+    <div class="chart-item">
+      <p class="chart-title">Produtos Próximos do Vencimento</p>
+      <canvas baseChart
+              [datasets]="produtosVencimentoData"
+              [labels]="produtosVencimentoLabels"
+              [options]="chartOptions"
+              chartType="line"
+              width="300" height="200">
+      </canvas>
+    </div>
+
+    <div class="chart-item">
+      <p class="chart-title">Vendas por Categoria</p>
+      <canvas baseChart
+              [datasets]="vendasCategoriaData"
+              [labels]="vendasCategoriaLabels"
+              [options]="chartOptions"
+              chartType="pie"
+              width="300" height="200">
+      </canvas>
+    </div>
+  </div>

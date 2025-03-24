@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ChartDataset, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true,
-  imports: [NgChartsModule]
+  imports: [NgChartsModule, DashboardComponent]
 })
 export class HomeComponent {
 

@@ -22,6 +22,7 @@ export class VendaComponent implements OnInit {
   produtos: Produto[] = [];
   venda: Venda = { cliente: {} as Cliente, dataVenda: '', total: 0, status: 'PENDENTE', itens: [] };
   produtoSelecionado!: number; // Alterado para armazenar ID do produto
+  quantidade: number = 1;
 
   constructor(
     private vendaService: VendaService,
@@ -65,17 +66,18 @@ export class VendaComponent implements OnInit {
     this.calcularTotal();
   }
 
-  removerProduto(index: number | undefined): void {
+  removerProduto(index: number | null | undefined): void {
     if (index === undefined) {
       console.error("Erro: Código do produto é indefinido!");
       return;
     }
-    this.venda.itens.splice(index, 1);
+    this.venda.itens = this.venda.itens.filter(item => item.produto.id !== index);
     this.calcularTotal();
   }
 
+
   calcularTotal(): void {
-    this.venda.total = this.venda.itens.reduce((sum, item) => sum + item.subtotal, 0);
+    this.venda.total = this.venda.itens.reduce((sum, item) => sum + item.quantidade * item.subtotal, 0);
   }
 
   salvarVenda(): void {
